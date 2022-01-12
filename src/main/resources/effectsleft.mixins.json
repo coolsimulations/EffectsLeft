@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "package": "net.coolsimulations.EffectsLeft.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "client": [
+    	"EffectRenderingInventoryScreenMixin",
+    	"AbstractContainerScreenAccessor",
+    	"ClientPackSourceMixin",
+    	"ClientPacketListenerMixin",
+    	"DefaultPotionEffectExclusionZonesMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8"
+}

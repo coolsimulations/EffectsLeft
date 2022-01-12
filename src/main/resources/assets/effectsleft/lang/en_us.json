@@ -1,0 +1,7 @@
+{
+  "el.update.display1": "This is an old version of %s! Version %s is now available!",
+  "el.update.display2": "Please click to download!",
+  "el.update.display3": "%s no longer supports Minecraft Version %s! Please update to a newer Minecraft Version for more features!",
+  
+  "modmenu.guilded": "Guilded"
+}
