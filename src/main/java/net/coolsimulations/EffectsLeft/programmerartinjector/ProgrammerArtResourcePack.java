@@ -9,13 +9,12 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +26,8 @@ import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSectionSerializer;
 import net.minecraft.util.GsonHelper;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModFileInfo;
 
 /***
  * 
@@ -98,12 +99,12 @@ public class ProgrammerArtResourcePack extends FilePackResources {
         if(!resourceType.equals(PackType.CLIENT_RESOURCES))
             return namespaces;
 
-        for(ModContainer container : FabricLoader.getInstance().getAllMods()){
-            Path path = container.getRootPath();
+        for(IModFileInfo container : ModList.get().getModFiles()){
+            Path path = container.getFile().getFilePath();
             path = path.toAbsolutePath().normalize();
             
-            Path childPath = path.resolve(("programmer_art/"+resourceType.getDirectory()).replace("/", path.getFileSystem().getSeparator())).toAbsolutePath().normalize();
-            if(childPath.startsWith(path) && Files.exists(childPath)){
+            Path childPath = container.getFile().findResource("/programmer_art").resolve(("/"+resourceType.getDirectory()).replace("/", path.getFileSystem().getSeparator())).toAbsolutePath().normalize();
+            if(Files.exists(childPath)){
                 try(DirectoryStream<Path> dirs = Files.newDirectoryStream(childPath, Files::isDirectory)){
                     for(Path dir : dirs){
                         String name = dir.getFileName().toString();
@@ -112,7 +113,7 @@ public class ProgrammerArtResourcePack extends FilePackResources {
                         if(RESOURCE_PACK_PATH.matcher(name).matches()){
                             namespaces.add(name);
                         }else{
-                            System.out.println("Ignoring invalid namespace " + name + " in mod " + container.getMetadata().getId());
+                            System.out.println("Ignoring invalid namespace " + name + " in mod " + container.getFile().getFileName());
                         }
                     }
                 }catch(IOException e){
@@ -127,7 +128,11 @@ public class ProgrammerArtResourcePack extends FilePackResources {
     @Override
     protected InputStream getResource(String name) throws IOException {
         if(name.equals("pack.png")){
-            return VanillaPackResources.class.getClassLoader().getResources("programmer_art/"+name).nextElement().openStream();
+        	try {
+        		return VanillaPackResources.class.getClassLoader().getResources("programmer_art/"+name).nextElement().openStream();
+        	} catch (NoSuchElementException e) {
+        		return super.getResource(name);
+        	}
         }
         return super.getResource(name);
     }

@@ -22,16 +22,16 @@ import net.minecraft.world.effect.MobEffectInstance;
 @Mixin(DefaultPotionEffectExclusionZones.class)
 public class DefaultPotionEffectExclusionZonesMixin {
 	
-	@Inject(method = "provide", at = @At(value = "HEAD"), cancellable = true, require = 0)
+	@Inject(method = "provide", at = @At(value = "HEAD"), cancellable = true, remap = false, require = 0)
 	public void provide(EffectRenderingInventoryScreen<?> screen, CallbackInfoReturnable<Collection<Rectangle>> info) {
 		if (screen.canSeeEffects()) {
 			Collection<MobEffectInstance> activePotionEffects = Minecraft.getInstance().player.getActiveEffects();
-			int x = ((AbstractContainerScreenAccessor) screen).getLeftPos() - 124;
+			int x = screen.getGuiLeft() - 124;
 			int availableWidth = screen.width - x;
 			if (!activePotionEffects.isEmpty() && availableWidth >= 32) {
 				boolean fullWidth = x >= 0;
 				List<Rectangle> zones = new ArrayList();
-				int y = ((AbstractContainerScreenAccessor) screen).getTopPos();
+				int y = screen.getGuiTop();
 				int height = 33;
 				if (activePotionEffects.size() > 5) {
 					height = 132 / (activePotionEffects.size() - 1);
@@ -40,7 +40,7 @@ public class DefaultPotionEffectExclusionZonesMixin {
 				for (Iterator var9 = Ordering.natural().sortedCopy(activePotionEffects).iterator(); var9
 						.hasNext(); y += height) {
 					MobEffectInstance instance = (MobEffectInstance) var9.next();
-					zones.add(new Rectangle(fullWidth ? x : ((AbstractContainerScreenAccessor) screen).getLeftPos() - 36, y, fullWidth ? 120 : 32, 32));
+					zones.add(new Rectangle(fullWidth ? x : screen.getGuiLeft() - 36, y, fullWidth ? 120 : 32, 32));
 				}
 
 				info.setReturnValue(zones);

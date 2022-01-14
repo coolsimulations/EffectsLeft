@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[39,]"
+issueTrackerURL="http://github.com/coolsimulations/effectsleft/issues/"
+logoFile="logo.png"
+license="All rights reserved"
+
+[[mods]]
+    modId="effectsleft"
+    version="0.1.0"
+    updateJSONURL="https://coolsimulations.net/mcmods/effectsleft/versionchecker.json"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/effectsleft"
+    displayName="EffectsLeft"
+    credits="To Admiral_Alpaca, it was playing on his server that inspired me to make this..."
+    authors="coolsim"
+    description='''
+    EffectsLeft moves the potion effects in the inventory screen to display on the left rather than the right, back to how it was before 1.18.
+    '''
+[[dependencies.effectsLeft]]
+    modId="forge"
+    mandatory=true
+    versionRange="[39.0.7,]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.effectsLeft]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.1,]"
+    ordering="NONE"
+    side="BOTH"
