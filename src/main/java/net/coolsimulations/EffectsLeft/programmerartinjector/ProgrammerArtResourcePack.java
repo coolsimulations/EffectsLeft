@@ -9,6 +9,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -127,7 +128,11 @@ public class ProgrammerArtResourcePack extends FilePackResources {
     @Override
     protected InputStream getResource(String name) throws IOException {
         if(name.equals("pack.png")){
-            return VanillaPackResources.class.getClassLoader().getResources("programmer_art/"+name).nextElement().openStream();
+        	try {
+        		return VanillaPackResources.class.getClassLoader().getResources("programmer_art/"+name).nextElement().openStream();
+        	} catch (NoSuchElementException e) {
+        		return super.getResource(name);
+        	}
         }
         return super.getResource(name);
     }
