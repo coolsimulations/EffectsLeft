@@ -6,6 +6,8 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.IExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod(value = ELReference.MOD_ID)
@@ -15,6 +17,8 @@ public class EffectsLeft {
 	public EffectsLeft() {
 		
 		EffectsLeftUpdateHandler.init();
+		
+		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> "client-only", (v, n) -> n));
 	}
 	
 	@SubscribeEvent
