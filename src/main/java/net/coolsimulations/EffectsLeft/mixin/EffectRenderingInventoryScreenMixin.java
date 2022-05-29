@@ -1,11 +1,11 @@
 package net.coolsimulations.EffectsLeft.mixin;
 
-import java.util.Iterator;
-
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,17 +14,17 @@ import net.coolsimulations.EffectsLeft.ELReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 @Mixin(EffectRenderingInventoryScreen.class)
 public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+	
+	private boolean renderIcon;
+	private int size;
 
 	public EffectRenderingInventoryScreenMixin(T abstractContainerMenu, Inventory inventory, Component component) {
 		super(abstractContainerMenu, inventory, component);
@@ -45,39 +45,43 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 		return (this.leftPos - 124) >= 0;
 	}
 	
-	@Overwrite
-	private void renderBackgrounds(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl) {
-		RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
-		int k = this.topPos;
-
-		for (Iterator var7 = iterable.iterator(); var7.hasNext(); k += j) {
-			MobEffectInstance mobEffectInstance = (MobEffectInstance) var7.next();
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			if (bl) {
-				this.blit(poseStack, i, k, 0, 166, 120, 32);
-			} else {
-				if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art")) {
-					RenderSystem.setShaderTexture(0, new ResourceLocation(ELReference.MOD_ID, "textures/gui/container/effects_icon.png"));
-					this.blit(poseStack, this.leftPos - 36, k, 157, 190, 32, 32);
-				} else
-					this.blit(poseStack, this.leftPos - 36, k, 0, 198, 32, 32);
-			}
-		}
-
+	@Inject(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1))
+	private void renderBackgroundsM(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl, CallbackInfo info) {
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+			RenderSystem.setShaderTexture(0, new ResourceLocation(ELReference.MOD_ID, "textures/gui/container/effects_icon.png"));
 	}
 	
-	@Overwrite
-	private void renderIcons(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl) {
-		MobEffectTextureManager mobEffectTextureManager = this.minecraft.getMobEffectTextures();
-		int k = this.topPos;
-
-		for (Iterator var8 = iterable.iterator(); var8.hasNext(); k += j) {
-			MobEffectInstance mobEffectInstance = (MobEffectInstance) var8.next();
-			MobEffect mobEffect = mobEffectInstance.getEffect();
-			TextureAtlasSprite textureAtlasSprite = mobEffectTextureManager.get(mobEffect);
-			RenderSystem.setShaderTexture(0, textureAtlasSprite.atlas().location());
-			blit(poseStack, i + (bl ? 6 : 95), k + 7, this.getBlitOffset(), 18, 18, textureAtlasSprite);
+	@ModifyArg(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1), index = 1)
+	private int renderBackgroundsI(int i) {
+		return this.leftPos - 36;
+	}
+	
+	@ModifyArg(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1), index = 3)
+	private int renderBackgroundsL(int l) {
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+			return 157;
+		else {
+			return l;
 		}
-
+	}
+	
+	@ModifyArg(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1), index = 4)
+	private int renderBackgroundsM(int m) {
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+			return 190;
+		else {
+			return m;
+		}
+	}
+	
+	@Inject(method = "renderIcons(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At("HEAD"))
+	private void renderIconsBool(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl, CallbackInfo info) {
+	  renderIcon = bl;
+	  size = i;
+	}
+	
+	@ModifyArg(method = "renderIcons(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIILnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V"), index = 1)
+	private int renderIcons(int i) {
+		return size + (renderIcon ? 6 : 95);
 	}
 }

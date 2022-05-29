@@ -15,7 +15,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 
 def mcVersion = "1.18.1"
-def modVersion = "0.1.0"
+def modVersion = "0.1.1"
 version = "${mcVersion}-${modVersion}"
 group = "net.coolsimulations.EffectsLeft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EffectsLeft"
