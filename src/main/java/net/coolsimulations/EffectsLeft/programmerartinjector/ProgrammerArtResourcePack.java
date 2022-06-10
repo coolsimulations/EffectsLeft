@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 import com.google.gson.JsonObject;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.FilePackResources;
 import net.minecraft.server.packs.FolderPackResources;
@@ -153,7 +152,7 @@ public class ProgrammerArtResourcePack extends FilePackResources {
         private final Component text;
 
         public CustomMetadataReader(String description) {
-            this.text = new TextComponent(description);
+            this.text = Component.literal(description);
         }
         
         public PackMetadataSection fromJson(JsonObject jsonObject) {

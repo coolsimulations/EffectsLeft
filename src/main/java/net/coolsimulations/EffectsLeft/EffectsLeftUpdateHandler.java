@@ -5,21 +5,21 @@ import java.util.Scanner;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public class EffectsLeftUpdateHandler {
 	
 	private static String latestVersion;
 	private static String latestVersionInfo;
 	public static boolean isOld = false;
-	public static TranslatableComponent updateInfo = null;
-	public static TextComponent updateVersionInfo = null;
+	public static MutableComponent updateInfo = null;
+	public static MutableComponent updateVersionInfo = null;
 	
 	public static void init() {
 		
 		try {
-            URL url = new URL("https://coolsimulations.net/mcmods/effectsleft/versionchecker118.txt");
+            URL url = new URL("https://coolsimulations.net/mcmods/effectsleft/versionchecker119.txt");
             Scanner s = new Scanner(url.openStream());
             latestVersion = s.next();
             s.close();
@@ -28,7 +28,7 @@ public class EffectsLeftUpdateHandler {
         }
 		
 		try {
-            URL url = new URL("https://coolsimulations.net/mcmods/effectsleft/updateinfo118.txt");
+            URL url = new URL("https://coolsimulations.net/mcmods/effectsleft/updateinfo119.txt");
             Scanner s = new Scanner(url.openStream());
             latestVersionInfo = s.nextLine();
             s.close();
@@ -42,13 +42,13 @@ public class EffectsLeftUpdateHandler {
 				
 				isOld = true;
 				
-				TextComponent el = new TextComponent(ELReference.MOD_NAME);
+				MutableComponent el = Component.literal(ELReference.MOD_NAME);
 				el.withStyle(ChatFormatting.BLUE);
 				
-				TextComponent MCVersion = new TextComponent(SharedConstants.getCurrentVersion().getName());
+				MutableComponent MCVersion = Component.literal(SharedConstants.getCurrentVersion().getName());
 				MCVersion.withStyle(ChatFormatting.BLUE);
 				
-				updateInfo = new TranslatableComponent("el.update.display3", new Object[] {el, MCVersion});
+				updateInfo = Component.translatable("el.update.display3", new Object[] {el, MCVersion});
 				updateInfo.withStyle(ChatFormatting.YELLOW);
 			}
 			
@@ -56,18 +56,18 @@ public class EffectsLeftUpdateHandler {
 				
 				isOld = true;
 				
-				TextComponent el = new TextComponent(ELReference.MOD_NAME);
+				MutableComponent el = Component.literal(ELReference.MOD_NAME);
 				el.withStyle(ChatFormatting.BLUE);
 				
-				TextComponent version = new TextComponent(latestVersion);
+				MutableComponent version = Component.literal(latestVersion);
 				version.withStyle(ChatFormatting.BLUE);
 				
-				updateInfo = new TranslatableComponent("el.update.display1", new Object[] {el, version});
+				updateInfo = Component.translatable("el.update.display1", new Object[] {el, version});
 				updateInfo.withStyle(ChatFormatting.YELLOW);
 				
 				if(latestVersionInfo != null) {
 					
-					updateVersionInfo = new TextComponent(latestVersionInfo);
+					updateVersionInfo = Component.literal(latestVersionInfo);
 					updateVersionInfo.withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD);
 				}
 				
