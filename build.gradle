@@ -78,3 +78,17 @@ jar {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 }
+
+task packDev(type: Jar) {
+    from sourceSets.main.output
+    from sourceSets.main.allJava
+    classifier = "Dev"
+    version = "${project.version}"
+
+    println(defaultTasks)
+}
+
+
+artifacts {
+    archives packDev
+}
