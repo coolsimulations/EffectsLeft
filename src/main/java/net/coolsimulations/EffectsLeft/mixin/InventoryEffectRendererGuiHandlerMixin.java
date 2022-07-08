@@ -15,8 +15,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraftforge.client.EffectRenderer;
-import net.minecraftforge.client.RenderProperties;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
 @Mixin(targets = "mezz.jei.plugins.vanilla.InventoryEffectRendererGuiHandler")
 public class InventoryEffectRendererGuiHandlerMixin <T extends AbstractContainerMenu> {
@@ -41,8 +40,8 @@ public class InventoryEffectRendererGuiHandlerMixin <T extends AbstractContainer
 					height = 132 / (activePotionEffects.size() - 1);
 				}
 				for (MobEffectInstance potionEffect : activePotionEffects) {
-					EffectRenderer effectRenderer = RenderProperties.getEffectRenderer(potionEffect);
-					if (effectRenderer.shouldRender(potionEffect)) {
+					IClientMobEffectExtensions effectRenderer = IClientMobEffectExtensions.of(potionEffect);
+					if (effectRenderer.isVisibleInGui(potionEffect)) {
 						areas.add(new Rect2i(fullWidth ? x : containerScreen.getGuiLeft() - 36, y, width, height));
 						y += height;
 					}

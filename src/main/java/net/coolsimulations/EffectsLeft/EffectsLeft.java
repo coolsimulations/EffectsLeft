@@ -21,7 +21,7 @@ public class EffectsLeft {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerJoin(ClientPlayerNetworkEvent.LoggedInEvent event) {
+	public static void onPlayerJoin(ClientPlayerNetworkEvent.LoggingIn event) {
 		if(EffectsLeftUpdateHandler.isOld == true) {
 			event.getPlayer().sendSystemMessage(EffectsLeftUpdateHandler.updateInfo.setStyle(EffectsLeftUpdateHandler.updateInfo.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("el.update.display2"))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/effectsleft"))));
 			event.getPlayer().sendSystemMessage(EffectsLeftUpdateHandler.updateVersionInfo.setStyle(EffectsLeftUpdateHandler.updateVersionInfo.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("el.update.display2"))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/effectsleft"))));
