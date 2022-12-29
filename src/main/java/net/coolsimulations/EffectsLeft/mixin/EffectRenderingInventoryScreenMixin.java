@@ -47,7 +47,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 	
 	@Inject(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1))
 	private void renderBackgroundsM(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl, CallbackInfo info) {
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			RenderSystem.setShaderTexture(0, new ResourceLocation(ELReference.MOD_ID, "textures/gui/container/effects_icon.png"));
 	}
 	
@@ -58,7 +58,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 	
 	@ModifyArg(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1), index = 3)
 	private int renderBackgroundsL(int l) {
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			return 157;
 		else {
 			return l;
@@ -67,7 +67,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 	
 	@ModifyArg(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1), index = 4)
 	private int renderBackgroundsM(int m) {
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			return 190;
 		else {
 			return m;

@@ -6,7 +6,6 @@
     "refmap": "effectsleft.refmap.json",
     "client": [
     	"EffectRenderingInventoryScreenMixin",
-    	"ClientPackSourceMixin",
     	"DefaultPotionEffectExclusionZonesMixin",
     	"InventoryEffectRendererGuiHandlerMixin"
     ],
