@@ -49,7 +49,7 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 	
 	@Inject(method = "renderBackgrounds(Lcom/mojang/blaze3d/vertex/PoseStack;IILjava/lang/Iterable;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/EffectRenderingInventoryScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V", ordinal = 1))
 	private void renderBackgroundsM(PoseStack poseStack, int i, int j, Iterable<MobEffectInstance> iterable, boolean bl, CallbackInfo info) {
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			RenderSystem.setShaderTexture(0, new ResourceLocation(ELReference.MOD_ID, "textures/gui/container/effects_icon.png"));
 	}
 	
@@ -57,10 +57,10 @@ public abstract class EffectRenderingInventoryScreenMixin<T extends AbstractCont
 	private void renderBackgroundsI(Args args) {
 		
 		int l = args.get(3);
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			l = 157;
 		int m = args.get(4);
-		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programer_art"))
+		if(Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("programmer_art") && Minecraft.getInstance().getResourcePackRepository().getSelectedIds().contains("effectsleft:programmer_art"))
 			m = 190;
 		
 		args.set(1, this.leftPos - 36);

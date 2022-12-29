@@ -6,7 +6,6 @@
     "client": [
     	"EffectRenderingInventoryScreenMixin",
     	"AbstractContainerScreenAccessor",
-    	"ClientPackSourceMixin",
     	"ClientPacketListenerMixin",
     	"DefaultPotionEffectExclusionZonesMixin",
     	"InventoryEffectRendererGuiHandlerMixin"
