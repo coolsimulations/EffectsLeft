@@ -2,6 +2,7 @@
     "required": true,
     "package": "net.coolsimulations.EffectsLeft.mixin",
     "compatibilityLevel": "JAVA_17",
+    "plugin": "net.coolsimulations.EffectsLeft.EffectsLeftMixinPlugin",
     "refmap": "effectsleft.refmap.json",
     "client": [
     	"EffectRenderingInventoryScreenMixin",

@@ -17,7 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
-@Mixin(targets = "mezz.jei.plugins.vanilla.InventoryEffectRendererGuiHandler")
+@Mixin(targets = "mezz.jei.library.plugins.vanilla.InventoryEffectRendererGuiHandler")
 public class InventoryEffectRendererGuiHandlerMixin <T extends AbstractContainerMenu> {
 
 	@Inject(method = "getGuiExtraAreas", at = @At(value = "HEAD"), cancellable = true, remap = false, require = 0)
