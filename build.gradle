@@ -37,6 +37,8 @@ dependencies {
 
 	modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
+	modImplementation "dev.emi:emi:${project.emi_version}"
+
         implementation fileTree(dir: 'libs', include: '*.jar')
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.

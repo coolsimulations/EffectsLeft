@@ -21,6 +21,9 @@
   "entrypoints": {
     "client": [
       "net.coolsimulations.EffectsLeft.EffectsLeft"
+    ],
+    "emi": [
+      "net.coolsimulations.EffectsLeft.EffectsLeftEMI"
     ]
   },
   
