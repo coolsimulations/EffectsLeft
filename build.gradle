@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -36,6 +36,8 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+
+	modImplementation "dev.emi:emi:${project.emi_version}"
 
         implementation fileTree(dir: 'libs', include: '*.jar')
 
